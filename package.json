@@ -9,6 +9,7 @@
   "author": "Jonatham Siqueira",
   "license": "ISC",
   "dependencies": {
+    "colors": "^1.4.0",
     "dot": "^1.1.3",
     "dotenv": "^16.3.1",
     "env": "^0.0.2",
