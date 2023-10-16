@@ -2,6 +2,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/userModel.js");
 const asyncHandler = require("express-async-handler");
 
+//@description     Middleware to protect routes with JWT authentication
+//@access          Protected
 const protect = asyncHandler(async (req, res, next) => {
   let token;
 
@@ -12,21 +14,22 @@ const protect = asyncHandler(async (req, res, next) => {
     try {
       token = req.headers.authorization.split(" ")[1];
 
-      //decodes token id
+      // Decode the token to obtain user information
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+      // Set the user in the request object, excluding the password field
       req.user = await User.findById(decoded.id).select("-password");
 
       next();
     } catch (error) {
       res.status(401);
-      throw new Error("Not authorized, token failed");
+      throw new Error("Not authorized, token validation failed");
     }
   }
 
   if (!token) {
     res.status(401);
-    throw new Error("Not authorized, no token");
+    throw new Error("Not authorized, no token provided");
   }
 });
 

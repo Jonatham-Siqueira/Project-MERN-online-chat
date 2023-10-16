@@ -1,6 +1,6 @@
-const asyncHandler = require("express-async-handler");
-const Chat = require("../models/chatModel");
-const User = require("../models/userModel");
+const asyncHandler = require("express-async-handler"); // Import the 'express-async-handler' library to handle asynchronous routes
+const Chat = require("../models/chatModel"); // Import the 'Chat' model
+const User = require("../models/userModel"); // Import the 'User' model
 
 //@description     Create or fetch One to One Chat
 //@route           POST /api/chat/
@@ -10,7 +10,7 @@ const accessChat = asyncHandler(async (req, res) => {
 
   if (!userId) {
     console.log("UserId param not sent with request");
-    return res.sendStatus(400);
+    return res.sendStatus(400); // Respond with a 400 Bad Request status if userId is missing
   }
 
   var isChat = await Chat.find({
@@ -29,7 +29,7 @@ const accessChat = asyncHandler(async (req, res) => {
   });
 
   if (isChat.length > 0) {
-    res.send(isChat[0]);
+    res.send(isChat[0]); // Send the existing chat if found
   } else {
     var chatData = {
       chatName: "sender",
